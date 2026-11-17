@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Menu, X } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import logoImage from "@/assets/Logotipo.png";
 
 type NavLink = { href: string; label: string };
@@ -20,6 +21,10 @@ const Navigation = () => {
   const reduce = useReducedMotion();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { pathname } = useLocation();
+  // On secondary pages (e.g. /aviso-de-privacidad) the sections live on the
+  // home page, so anchors must point to "/#section" instead of "#section".
+  const toSection = (hash: string) => (pathname === "/" ? hash : `/${hash}`);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 32);
@@ -45,20 +50,11 @@ const Navigation = () => {
               : "border-[#16181D]/10 bg-[#efece6]/55 backdrop-blur-md"
           }`}
         >
-          {/* Logo + status */}
+          {/* Logo */}
           <div className="flex shrink-0 items-center gap-4">
-            <a href="#inicio" className="flex items-center">
+            <a href={toSection("#inicio")} className="flex items-center">
               <img src={logoImage} alt="Inmo Leads" className="h-9 w-auto md:h-10" />
             </a>
-            <span className="hidden items-center gap-2 border-l border-[#16181D]/15 pl-4 xl:flex">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#E85C03] opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#E85C03]" />
-              </span>
-              <span className="label-mono text-[9px] text-[#16181D]/55">
-                Disponible
-              </span>
-            </span>
           </div>
 
           {/* Desktop links — mono, uppercase, orange underline on hover */}
@@ -66,7 +62,7 @@ const Navigation = () => {
             {navLinks.map((link) => (
               <a
                 key={link.href}
-                href={link.href}
+                href={toSection(link.href)}
                 className="group relative label-mono text-[11px] text-[#16181D]/60 transition-colors hover:text-[#16181D]"
               >
                 {link.label}
@@ -112,7 +108,7 @@ const Navigation = () => {
                 {navLinks.map((link, i) => (
                   <motion.a
                     key={link.href}
-                    href={link.href}
+                    href={toSection(link.href)}
                     onClick={closeMenu}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}

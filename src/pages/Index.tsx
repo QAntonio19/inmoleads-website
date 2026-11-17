@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -10,6 +12,18 @@ import Footer from "@/components/Footer";
 import MarqueeRibbon from "@/components/MarqueeRibbon";
 
 const Index = () => {
+  const { hash } = useLocation();
+
+  // Arriving from another page via "/#section": scroll once the section is rendered.
+  useEffect(() => {
+    if (!hash) return;
+    const id = decodeURIComponent(hash.slice(1));
+    const frame = requestAnimationFrame(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [hash]);
+
   return (
     <div className="min-h-screen bg-[#ECEDE9] text-[#16181D]">
       <Navigation />
