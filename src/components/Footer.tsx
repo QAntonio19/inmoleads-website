@@ -1,4 +1,5 @@
 import { Facebook, Instagram } from "lucide-react";
+import { Link } from "react-router-dom";
 import tiktokIcon from "@/assets/tiktok.png";
 import { Reveal, Stagger, StaggerItem, SpotlightCursor } from "@/components/motion/Motion";
 
@@ -120,6 +121,29 @@ const Footer = () => {
             </ul>
           </StaggerItem>
         </Stagger>
+
+        {/* Legal */}
+        <div className="border-t border-white/10 pt-6">
+          <div className="flex flex-col items-center justify-between gap-4 text-sm text-white/60 md:flex-row">
+            <p>© {new Date().getFullYear()} InmoLeads by ExpertizDigital. Todos los derechos reservados.</p>
+            <nav aria-label="Enlaces legales" className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+              <Link
+                to="/aviso-de-privacidad"
+                className="underline-offset-4 transition-colors hover:text-[#E85C03] hover:underline"
+              >
+                Aviso de privacidad
+              </Link>
+              <a
+                href="/Formato-ARCO-ExpertizDigital.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline-offset-4 transition-colors hover:text-[#E85C03] hover:underline"
+              >
+                Formato Derechos ARCO
+              </a>
+            </nav>
+          </div>
+        </div>
       </div>
     </footer>
   );
