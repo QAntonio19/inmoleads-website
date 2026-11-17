@@ -1,13 +1,11 @@
 import type { ReactNode } from "react";
 import { vslConfig } from "../config";
+// Copia de src/assets/Logotipo.png del sitio, dentro del módulo para que funcione en ambos repos.
+import logo from "../assets/logo.png";
 
 /** Logo sin enlace: la landing no tiene salidas. */
 export function Wordmark() {
-  return (
-    <span className="font-display text-xl font-extrabold tracking-tight text-foreground">
-      INMO<span className="text-primary">LEADS</span>
-    </span>
-  );
+  return <img src={logo} alt="InmoLeads by Expertiz Digital" width={600} height={212} className="h-9 w-auto sm:h-10" />;
 }
 
 export function Layout({ children, aside }: { children: ReactNode; aside?: ReactNode }) {
