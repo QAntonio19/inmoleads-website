@@ -1,4 +1,5 @@
 import { Facebook, Instagram } from "lucide-react";
+import { Link } from "react-router-dom";
 import tiktokIcon from "@/assets/tiktok.png";
 import { Reveal, Stagger, StaggerItem, SpotlightCursor } from "@/components/motion/Motion";
 
@@ -6,7 +7,7 @@ const ORANGE = "#E85C03";
 const WHATSAPP_URL =
   "https://wa.me/526643745275?text=Hola%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20sus%20servicios.";
 const GMAIL_COMPOSE_URL =
-  "https://mail.google.com/mail/?view=cm&fs=1&to=inmoleads@expertizdigital.com&su=Consulta&body=Hola%2C%20me%20gustar%C3%ADa%20informaci%C3%B3n.";
+  "https://mail.google.com/mail/?view=cm&fs=1&to=marketing@expertizdigital.com&su=Consulta&body=Hola%2C%20me%20gustar%C3%ADa%20informaci%C3%B3n.";
 
 const socialBtn =
   "w-12 h-12 rounded-full bg-white flex items-center justify-center transition-all duration-300 group hover:bg-[#E85C03] hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#E85C03] focus:ring-offset-[#1A1A1A]";
@@ -114,12 +115,35 @@ const Footer = () => {
                   className="underline decoration-white/40 underline-offset-4 hover:decoration-white"
                   aria-label="Escríbenos por Gmail"
                 >
-                  inmoleads@expertizdigital.com
+                  marketing@expertizdigital.com
                 </a>
               </li>
             </ul>
           </StaggerItem>
         </Stagger>
+
+        {/* Legal */}
+        <div className="border-t border-white/10 pt-6">
+          <div className="flex flex-col items-center justify-between gap-4 text-sm text-white/60 md:flex-row">
+            <p>© {new Date().getFullYear()} InmoLeads by ExpertizDigital. Todos los derechos reservados.</p>
+            <nav aria-label="Enlaces legales" className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+              <Link
+                to="/aviso-de-privacidad"
+                className="underline-offset-4 transition-colors hover:text-[#E85C03] hover:underline"
+              >
+                Aviso de privacidad
+              </Link>
+              <a
+                href="/Formato-ARCO-ExpertizDigital.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline-offset-4 transition-colors hover:text-[#E85C03] hover:underline"
+              >
+                Formato Derechos ARCO
+              </a>
+            </nav>
+          </div>
+        </div>
       </div>
     </footer>
   );

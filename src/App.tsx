@@ -8,8 +8,8 @@ import Index from "./pages/Index";
 
 // Code-split heavy/secondary routes so the landing bundle stays small & fast.
 const CalculadoraViabilidad = lazy(() => import("./pages/CalculadoraViabilidad"));
-const NotFound = lazy(() => import("./pages/NotFound"));
 const AvisoPrivacidad = lazy(() => import("./pages/AvisoPrivacidad"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 // VSL landing for ads (/sesion, /sesion/agenda, /sesion/gracias, /sesion/todavia-no).
 const VslRoutes = lazy(() => import("./features/vsl"));
 
