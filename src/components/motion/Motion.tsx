@@ -216,14 +216,16 @@ export function AnimatedWords({
       {words.map((w, i) => (
         <span
           key={i}
-          className="mr-[0.25em] inline-block overflow-hidden align-bottom last:mr-0"
+          // Mask is padded so descenders (g, p, q) and accents aren't clipped by the
+          // tight display line-height; negative margins keep the layout unchanged.
+          className="-mb-[0.22em] -mt-[0.12em] mr-[0.25em] inline-block overflow-hidden pb-[0.22em] pt-[0.12em] align-bottom last:mr-0"
         >
           <motion.span
             className={`inline-block ${wordClassName ?? ""} ${
               highlight.includes(i) ? highlightClassName : ""
             }`}
             variants={{
-              hidden: { y: "110%", opacity: 0 },
+              hidden: { y: "140%", opacity: 0 },
               show: {
                 y: "0%",
                 opacity: 1,
