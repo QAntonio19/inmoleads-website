@@ -10,6 +10,8 @@ import Index from "./pages/Index";
 const CalculadoraViabilidad = lazy(() => import("./pages/CalculadoraViabilidad"));
 const AvisoPrivacidad = lazy(() => import("./pages/AvisoPrivacidad"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+// VSL landing for ads (/sesion, /sesion/agenda, /sesion/gracias, /sesion/todavia-no).
+const VslRoutes = lazy(() => import("./features/vsl"));
 
 const queryClient = new QueryClient();
 
@@ -24,6 +26,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/calculadora-viabilidad" element={<CalculadoraViabilidad />} />
             <Route path="/aviso-de-privacidad" element={<AvisoPrivacidad />} />
+            <Route path="/sesion/*" element={<VslRoutes />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
