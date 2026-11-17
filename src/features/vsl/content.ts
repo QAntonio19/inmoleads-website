@@ -28,6 +28,8 @@ export const content = {
     intro: "5 preguntas rápidas. Si tu operación califica, eliges día y hora en el siguiente paso.",
     keepWatching: "Puedes seguir viendo el video mientras llenas tus datos",
     submit: "Ver horarios disponibles",
+    privacy: "Al enviar aceptas nuestro",
+    privacyLink: "aviso de privacidad",
   },
 
   testimonials: {

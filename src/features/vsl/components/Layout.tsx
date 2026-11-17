@@ -23,7 +23,12 @@ export function Layout({ children, aside }: { children: ReactNode; aside?: React
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-4 py-6 text-sm text-muted-foreground sm:px-6">
           <span>© {new Date().getFullYear()} InmoLeads</span>
-          <a href={vslConfig.privacyUrl} className="underline-offset-4 hover:underline">
+          <a
+            href={vslConfig.privacyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline-offset-4 hover:underline"
+          >
             Aviso de privacidad
           </a>
         </div>

@@ -45,7 +45,12 @@ export default function LandingPage() {
     requestAnimationFrame(() => formAnchor.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
   };
 
-  const submit = async (answers: Answers) => {
+  const submit = async (answers: Answers, { bot }: { bot: boolean }) => {
+    // Bot: se le muestra la salida normal de «no calificas», sin avisar a Make ni a Meta.
+    if (bot) {
+      navigate(paths.notYet);
+      return;
+    }
     const result = qualify(answers);
     const lead: Lead = { id: newId(), answers, result, createdAt: new Date().toISOString() };
     track("VSL_Application", { status: result.status });
@@ -108,7 +113,7 @@ export default function LandingPage() {
 
           <div ref={formAnchor} className="scroll-mt-6">
             {showForm ? (
-              <ApplicationForm onSubmit={(a) => void submit(a)} busy={busy} />
+              <ApplicationForm onSubmit={(a, meta) => void submit(a, meta)} busy={busy} />
             ) : (
               <BookingGate unlocked={progress.unlocked} remainingToUnlock={progress.remainingToUnlock} onStart={openForm} />
             )}

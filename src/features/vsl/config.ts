@@ -64,7 +64,8 @@ export const vslConfig = {
   /** ID del pixel de Meta. Vacío = no se carga el pixel. */
   metaPixelId: ((env.VITE_META_PIXEL_ID as string | undefined) || "").trim(),
 
-  privacyUrl: "#",
+  /** Página del aviso de privacidad del sitio (src/pages/AvisoPrivacidad.tsx en inmoleads.pro). */
+  privacyUrl: "/aviso-de-privacidad",
 
   /** Página de términos de la garantía. Vacío = «*Aplican términos y condiciones» sin enlace. */
   termsUrl: "",

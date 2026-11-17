@@ -1,6 +1,8 @@
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { useId, useRef, useState, type FormEvent } from "react";
+import { vslConfig } from "../config";
 import { content } from "../content";
+import { HONEYPOT_NAME, looksLikeBot } from "../lib/antibot";
 import { cleanNational, formatNational, isCompleteNational, PHONE_COUNTRIES } from "../lib/phone";
 import { options, type Answers, type OptionKey } from "../lib/qualify";
 import { StepLabel } from "./Layout";
@@ -44,10 +46,18 @@ function validate(d: Draft): Errors {
   return e;
 }
 
-export function ApplicationForm({ onSubmit, busy = false }: { onSubmit: (answers: Answers) => void; busy?: boolean }) {
+export function ApplicationForm({
+  onSubmit,
+  busy = false,
+}: {
+  /** `bot`: el envío parece de un bot (campo trampa lleno o demasiado rápido). */
+  onSubmit: (answers: Answers, meta: { bot: boolean }) => void;
+  busy?: boolean;
+}) {
   const [draft, setDraft] = useState<Draft>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
   const formRef = useRef<HTMLFormElement>(null);
+  const shownAt = useRef(Date.now());
   const uid = useId();
 
   const set = (k: keyof Answers, v: string) => {
@@ -65,8 +75,10 @@ export function ApplicationForm({ onSubmit, busy = false }: { onSubmit: (answers
       formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
       return;
     }
+    const honeypot = new FormData(formRef.current ?? undefined).get(HONEYPOT_NAME);
+    const bot = looksLikeBot({ honeypot: String(honeypot ?? ""), elapsedMs: Date.now() - shownAt.current });
     const { phoneCountry, ...rest } = draft;
-    onSubmit({ ...rest, whatsapp: `${phoneCountry}${draft.whatsapp}` } as Answers);
+    onSubmit({ ...rest, whatsapp: `${phoneCountry}${draft.whatsapp}` } as Answers, { bot });
   };
 
   const phoneField = (
@@ -169,6 +181,12 @@ export function ApplicationForm({ onSubmit, busy = false }: { onSubmit: (answers
         {text("city", "Ciudad o zona donde compras", "text", { autoComplete: "address-level2" })}
       </div>
 
+      {/* Campo trampa: fuera de la vista, del teclado y de los lectores de pantalla. Solo un bot lo llena. */}
+      <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <label htmlFor={`${uid}-hp`}>No llenes este campo</label>
+        <input id={`${uid}-hp`} name={HONEYPOT_NAME} type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
+      </div>
+
       {QUESTIONS.map((q) => (
         <fieldset key={q.key} className="flex flex-col gap-3" aria-invalid={Boolean(errors[q.key])}>
           <legend className="mb-3 font-semibold">
@@ -221,6 +239,18 @@ export function ApplicationForm({ onSubmit, busy = false }: { onSubmit: (answers
           </>
         )}
       </button>
+      <p className="-mt-4 text-center text-sm text-muted-foreground">
+        {content.form.privacy}{" "}
+        <a
+          href={vslConfig.privacyUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline underline-offset-4 hover:text-foreground"
+        >
+          {content.form.privacyLink}
+        </a>
+        .
+      </p>
     </form>
   );
 }
