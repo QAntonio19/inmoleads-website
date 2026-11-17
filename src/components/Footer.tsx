@@ -7,7 +7,7 @@ const ORANGE = "#E85C03";
 const WHATSAPP_URL =
   "https://wa.me/526643745275?text=Hola%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20sus%20servicios.";
 const GMAIL_COMPOSE_URL =
-  "https://mail.google.com/mail/?view=cm&fs=1&to=inmoleads@expertizdigital.com&su=Consulta&body=Hola%2C%20me%20gustar%C3%ADa%20informaci%C3%B3n.";
+  "https://mail.google.com/mail/?view=cm&fs=1&to=marketing@expertizdigital.com&su=Consulta&body=Hola%2C%20me%20gustar%C3%ADa%20informaci%C3%B3n.";
 
 const socialBtn =
   "w-12 h-12 rounded-full bg-white flex items-center justify-center transition-all duration-300 group hover:bg-[#E85C03] hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#E85C03] focus:ring-offset-[#1A1A1A]";
@@ -115,7 +115,7 @@ const Footer = () => {
                   className="underline decoration-white/40 underline-offset-4 hover:decoration-white"
                   aria-label="Escríbenos por Gmail"
                 >
-                  inmoleads@expertizdigital.com
+                  marketing@expertizdigital.com
                 </a>
               </li>
             </ul>

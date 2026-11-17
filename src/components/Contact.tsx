@@ -178,7 +178,7 @@ export default function Contact() {
         `Mensaje:\n${form.mensaje}`
     );
 
-    openGmailCompose("inmoleads@expertizdigital.com", subject, body);
+    openGmailCompose("marketing@expertizdigital.com", subject, body);
     setOk(true);
     setForm({ nombre: "", apellido: "", email: "", telefono: "", mensaje: "" });
     setTipoCliente("");
