@@ -11,7 +11,6 @@ interface Props {
 /** Tarjeta de la agenda: bloqueada hasta el 60% del video, luego abre el formulario. */
 export function BookingGate({ unlocked, remainingToUnlock, onStart }: Props) {
   if (!unlocked) {
-    const left = remainingToUnlock === null ? null : formatClock(remainingToUnlock);
     return (
       <div className="flex flex-col items-center gap-4 rounded-xl border border-dashed border-border bg-muted/50 px-6 py-8 text-center">
         <span className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
@@ -21,14 +20,7 @@ export function BookingGate({ unlocked, remainingToUnlock, onStart }: Props) {
           <h2 className="font-display text-xl font-bold sm:text-2xl">{content.locked.title}</h2>
           <p className="text-muted-foreground">{content.locked.body}</p>
         </div>
-        <button
-          type="button"
-          disabled
-          className="inline-flex cursor-not-allowed items-center gap-2 rounded-lg bg-muted px-6 py-3 font-semibold text-muted-foreground"
-        >
-          <Lock className="h-4 w-4" aria-hidden />
-          Agendar mi sesión{left ? ` · se abre en ${left}` : ""}
-        </button>
+        <LockedButton label="Agendar mi sesión" remainingToUnlock={remainingToUnlock} />
         <p className="max-w-md text-sm text-muted-foreground">{content.locked.note}</p>
       </div>
     );
@@ -54,5 +46,39 @@ export function BookingGate({ unlocked, remainingToUnlock, onStart }: Props) {
       </button>
       <p className="text-sm text-muted-foreground">{content.unlocked.foot}</p>
     </div>
+  );
+}
+
+/**
+ * Botón de la agenda mientras sigue bloqueada, con la cuenta regresiva.
+ * Sin `onClick` queda deshabilitado; con `onClick` (CTA final) se puede tocar para volver al video.
+ */
+export function LockedButton({
+  label,
+  remainingToUnlock,
+  onClick,
+}: {
+  label: string;
+  remainingToUnlock: number | null;
+  onClick?: () => void;
+}) {
+  const left = remainingToUnlock === null ? null : formatClock(remainingToUnlock);
+  return (
+    <button
+      type="button"
+      disabled={!onClick}
+      onClick={onClick}
+      className={`inline-flex items-center gap-2 rounded-lg bg-muted px-6 py-3 font-semibold text-muted-foreground ${
+        onClick
+          ? "transition hover:bg-border focus:outline-none focus-visible:ring-4 focus-visible:ring-ring/40"
+          : "cursor-not-allowed"
+      }`}
+    >
+      <Lock className="h-4 w-4 shrink-0" aria-hidden />
+      <span>
+        {label}
+        {left ? ` · se abre en ${left}` : ""}
+      </span>
+    </button>
   );
 }
