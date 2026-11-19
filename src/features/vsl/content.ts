@@ -2,12 +2,19 @@
 // reemplazan cuando llegue el contenido final.
 
 export const content = {
-  scarcity: "Cupos limitados por zona",
-  headline:
-    "Si haces flipping y compras menos de 4 casas al mes, el problema no es el dinero: es de dónde salen.",
+  scarcity: "Solo 3 flippers por ciudad",
+  eyebrow: "Para flippers que compran menos de 4 casas al mes",
+  headline: "Recibe citas con propietarios que quieren vender su casa Infonavit, sin salir a buscarlas",
   subhead:
-    "Mira este video de 5 minutos. Si tu operación califica, al final podrás agendar una sesión con nuestro equipo.",
+    "El problema no es el dinero: es de dónde salen las casas. Mira este video de 5 minutos. Si tu operación califica, al final agendas tu sesión.",
+  benefits: ["Nosotros atendemos a los propietarios", "Tú solo vas a la cita"],
   chapters: ["Por qué no te llegan casas", "Cómo funciona el sistema", "Casos reales y tu sesión"],
+
+  stats: [
+    { value: "13 estados", label: "con operación activa" },
+    { value: "+650 citas", label: "con propietarios entregadas" },
+    { value: "+90 casas", label: "firmadas por nuestros clientes" },
+  ],
 
   locked: {
     title: "Tu sesión estratégica está bloqueada",
@@ -20,6 +27,15 @@ export const content = {
     body: "Responde 5 preguntas rápidas y elige tu horario. Revisamos tu zona y te decimos cuántas citas con propietarios podemos conseguirte.",
     cta: "Agendar mi sesión",
     foot: "Cupos limitados por zona · toma 1 minuto",
+  },
+
+  howItWorks: {
+    title: "Cómo funciona",
+    steps: [
+      { title: "Lanzamos anuncios en tu zona", body: "Buscamos propietarios con casa Infonavit y urgencia de vender." },
+      { title: "Nuestro equipo los califica", body: "Hablamos con el propietario y filtramos a quien sí quiere vender." },
+      { title: "Recibes la cita en tu agenda", body: "Tú solo vas, ves la casa y negocias." },
+    ],
   },
 
   form: {
@@ -35,20 +51,22 @@ export const content = {
   testimonials: {
     title: "Flippers que ya reciben citas con propietarios",
     // Uno por video, en el mismo orden que VITE_VSL_TESTIMONIAL_1…5 del .env.
-    // Mientras el nombre siga entre [corchetes], el video se muestra sin texto debajo.
+    // Ciudad y resultado van vacíos hasta tener el dato; vacío = no se muestra.
+    // Karla y Gerardo solo tienen audio: su tarjeta aparece cuando haya video en el .env.
     items: [
-      { name: "[CLIENTE]", city: "[CIUDAD]", result: "[N] casas compradas en [N] meses" },
-      { name: "[CLIENTE]", city: "[CIUDAD]", result: "[N] casas compradas en [N] meses" },
-      { name: "[CLIENTE]", city: "[CIUDAD]", result: "[N] casas compradas en [N] meses" },
-      { name: "[CLIENTE]", city: "[CIUDAD]", result: "[N] casas compradas en [N] meses" },
-      { name: "[CLIENTE]", city: "[CIUDAD]", result: "[N] casas compradas en [N] meses" },
+      { name: "Javier Chávez", city: "", result: "" },
+      { name: "Armando Pérez", city: "", result: "" },
+      { name: "Alberto Celorio", city: "", result: "" },
+      { name: "Karla Jordan", city: "", result: "" },
+      { name: "Gerardo Leal", city: "", result: "" },
     ],
   },
 
   guarantee: {
-    title: "Si en 90 días no ves resultados, trabajamos gratis hasta que los veas.",
-    // Letra chica debajo del título. Liga a vslConfig.termsUrl cuando exista la página de términos.
-    terms: "*Aplican términos y condiciones.",
+    title: "Si en 90 días no te entregamos citas calificadas, seguimos trabajando hasta lograrlo.",
+    condition: "Condición: mantener la pauta activa y atender las citas en 24 horas.",
+    // Enlace opcional debajo de la condición; solo aparece si vslConfig.termsUrl tiene valor.
+    terms: "Ver términos de la garantía",
   },
 
   faq: [
@@ -57,21 +75,12 @@ export const content = {
       a: "Trabajamos con flippers en 13 estados de la República Mexicana. En la sesión revisamos tu zona y te decimos si hay suficientes propietarios con casa Infonavit para que funcione.",
     },
     {
-      q: "¿Quién atiende a los propietarios?",
-      a: "Un asistente con inteligencia artificial contesta al instante y hace las preguntas clave: dónde está la casa, a nombre de quién está, cuánto debe y cuánto quiere. Después, nuestro equipo de asesores inmobiliarios le da seguimiento hasta agendar la cita. Tú recibes cada cita con su ficha técnica y solo vas a hacer la oferta.",
-    },
-    {
       q: "¿Qué pasa si en mi zona no hay casas?",
       a: "Lo revisamos antes de empezar. En la sesión analizamos tu zona, cuántas casas quieres comprar y cuántas citas necesitas. Si los números no dan, te lo decimos de frente.",
     },
     {
       q: "¿Cuánto cuesta?",
       a: "Depende de tu zona y de cuántas casas quieres comprar al mes. En la sesión te decimos cuántas citas necesitas y cuánto cuesta.",
-    },
-    // Las tres siguientes venían como «sugeridas, opcional» en el documento del 13 nov 2026.
-    {
-      q: "¿Trabajan con otros flippers en mi zona?",
-      a: "Trabajamos con pocos flippers por zona, para que no compitas con otro cliente por las mismas casas.",
     },
     {
       q: "¿Quién paga la publicidad?",
@@ -82,6 +91,12 @@ export const content = {
       a: "No es para ti si todavía no compras tu primera casa, si no tienes capital o si buscas un curso. Es para flippers que ya operan y quieren pasar de 2 a 5, 10 o 15 casas al mes.",
     },
   ],
+
+  finalCta: {
+    title: "¿Listo para que las casas lleguen a ti?",
+    cta: "Agendar mi sesión estratégica",
+    lockedNote: "Mira el video para desbloquear tu agenda",
+  },
 
   schedule: {
     step: "Paso 2 de 2 · Agenda",

@@ -8,7 +8,7 @@ import { BookingGate } from "../components/BookingGate";
 import { DebugBar } from "../components/DebugBar";
 import { Layout } from "../components/Layout";
 import { ProgressPanel } from "../components/ProgressPanel";
-import { Faq, Guarantee, Testimonials } from "../components/Sections";
+import { Benefits, Faq, FinalCta, Guarantee, HowItWorks, Stats, Testimonials } from "../components/Sections";
 import { VslPlayer } from "../components/VslPlayer";
 import { useWatchProgress } from "../hooks/useWatchProgress";
 import { qualify, type Answers } from "../lib/qualify";
@@ -23,6 +23,7 @@ export default function LandingPage() {
   const [showForm, setShowForm] = useState(false);
   const [busy, setBusy] = useState(false);
   const formAnchor = useRef<HTMLDivElement>(null);
+  const videoAnchor = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     captureUtms(search);
@@ -40,9 +41,16 @@ export default function LandingPage() {
   }, []);
 
   const openForm = () => {
+    if (!showForm) track("VSL_FormOpen");
     setShowForm(true);
-    track("VSL_FormOpen");
     requestAnimationFrame(() => formAnchor.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
+  };
+
+  /** Botón del final: con la agenda abierta lleva al formulario; si no, de vuelta al video. */
+  const finalCta = () => {
+    track("VSL_FinalCTA", { unlocked: progress.unlocked });
+    if (progress.unlocked) openForm();
+    else videoAnchor.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const submit = async (answers: Answers, { bot }: { bot: boolean }) => {
@@ -99,30 +107,37 @@ export default function LandingPage() {
         </span>
       }
     >
-      <div className="mx-auto flex max-w-4xl flex-col gap-16 px-4 pb-20 pt-10 sm:px-6 sm:pt-14">
-        <section className="flex flex-col gap-8">
+      <div className="mx-auto flex max-w-5xl flex-col gap-16 px-4 pb-20 pt-10 sm:px-6 sm:pt-14">
+        <section className="mx-auto flex w-full max-w-4xl flex-col gap-8">
           <div className="flex flex-col gap-4 text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground sm:text-sm">
+              {content.eyebrow}
+            </p>
             <h1 className="mx-auto max-w-3xl text-balance font-display text-3xl font-extrabold leading-tight sm:text-5xl">
               {content.headline}
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground">{content.subhead}</p>
+            <Benefits />
           </div>
 
-          <VslPlayer handlers={progress.handlers} />
+          <div ref={videoAnchor} className="scroll-mt-6">
+            <VslPlayer handlers={progress.handlers} />
+          </div>
           <ProgressPanel progress={progress} />
-
-          <div ref={formAnchor} className="scroll-mt-6">
-            {showForm ? (
-              <ApplicationForm onSubmit={(a, meta) => void submit(a, meta)} busy={busy} />
-            ) : (
-              <BookingGate unlocked={progress.unlocked} remainingToUnlock={progress.remainingToUnlock} onStart={openForm} />
-            )}
-          </div>
+          <Stats />
+          <BookingGate unlocked={progress.unlocked} remainingToUnlock={progress.remainingToUnlock} onStart={openForm} />
         </section>
 
+        <HowItWorks />
         <Testimonials />
         <Guarantee />
+
+        {/* El formulario se abre aquí, debajo de la garantía, al tocar «Agendar» arriba o al final. */}
+        <div ref={formAnchor} className="mx-auto w-full max-w-3xl scroll-mt-6 empty:hidden">
+          {showForm && <ApplicationForm onSubmit={(a, meta) => void submit(a, meta)} busy={busy} />}
+        </div>
         <Faq />
+        <FinalCta unlocked={progress.unlocked} remainingToUnlock={progress.remainingToUnlock} onClick={finalCta} />
       </div>
 
       <DebugBar

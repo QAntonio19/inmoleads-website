@@ -67,7 +67,7 @@ export const vslConfig = {
   /** Página del aviso de privacidad del sitio (src/pages/AvisoPrivacidad.tsx en inmoleads.pro). */
   privacyUrl: "/aviso-de-privacidad",
 
-  /** Página de términos de la garantía. Vacío = «*Aplican términos y condiciones» sin enlace. */
+  /** Página de términos de la garantía. Vacío = no se muestra enlace debajo de la condición. */
   termsUrl: "",
 
   /** Habilita ?unlock=1 y ?reset=1 para probar. Apagar en producción. */
